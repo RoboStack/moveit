@@ -6,7 +6,7 @@ add_library(${MOVEIT_LIB_NAME}
 )
 set_target_properties(${MOVEIT_LIB_NAME} PROPERTIES VERSION "${${PROJECT_NAME}_VERSION}")
 
-target_link_libraries(${MOVEIT_LIB_NAME} moveit_collision_detection ${catkin_LIBRARIES} ${urdfdom_LIBRARIES} ${urdfdom_headers_LIBRARIES} ${LIBFCL_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(${MOVEIT_LIB_NAME} moveit_collision_detection ${catkin_LIBRARIES} ${urdfdom_LIBRARIES} ${urdfdom_headers_LIBRARIES} ${LIBFCL_LIBRARIES} ${LIBCCD_LIBRARIES} ${Boost_LIBRARIES})
 add_dependencies(${MOVEIT_LIB_NAME} ${catkin_EXPORTED_TARGETS})
 
 add_library(collision_detector_fcl_plugin src/collision_detector_fcl_plugin_loader.cpp)
@@ -26,11 +26,15 @@ install(FILES ../collision_detector_fcl_description.xml DESTINATION ${CATKIN_PAC
 if(CATKIN_ENABLE_TESTING)
   catkin_add_gtest(test_fcl_collision_detection test/test_fcl_collision_detection_pr2.cpp)
   target_link_libraries(test_fcl_collision_detection moveit_test_utils ${MOVEIT_LIB_NAME} ${Boost_LIBRARIES})
-  # TODO: remove if transition to gtest's new API TYPED_TEST_SUITE_P is finished
-  target_compile_options(test_fcl_collision_detection PRIVATE -Wno-deprecated-declarations)
+  if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    # TODO: remove if transition to gtest's new API TYPED_TEST_SUITE_P is finished
+    target_compile_options(test_fcl_collision_detection PRIVATE -Wno-deprecated-declarations)
+  endif()
 
   catkin_add_gtest(test_fcl_collision_detection_panda test/test_fcl_collision_detection_panda.cpp)
   target_link_libraries(test_fcl_collision_detection_panda moveit_test_utils ${MOVEIT_LIB_NAME} ${Boost_LIBRARIES})
-  # TODO: remove if transition to gtest's new API TYPED_TEST_SUITE_P is finished
-  target_compile_options(test_fcl_collision_detection_panda PRIVATE -Wno-deprecated-declarations)
+  if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    # TODO: remove if transition to gtest's new API TYPED_TEST_SUITE_P is finished
+    target_compile_options(test_fcl_collision_detection_panda PRIVATE -Wno-deprecated-declarations)
+  endif()
 endif()
