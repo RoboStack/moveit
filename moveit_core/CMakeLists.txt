@@ -42,8 +42,22 @@ else()
   message(STATUS "Version of Bullet too old or not available: disabling Bullet collision detection plugin. Try using Ubuntu 18.04 or later.")
 endif()
 
-find_package(fcl REQUIRED)
-set(LIBFCL_LIBRARIES "fcl")
+find_package(fcl)
+if (fcl_FOUND)
+  set(LIBFCL_LIBRARIES ${FCL_LIBRARIES})
+  set(LIBFCL_INCLUDE_DIRS ${FCL_INCLUDE_DIRS})
+else()
+  find_package(PkgConfig REQUIRED)
+  pkg_check_modules(LIBFCL_PC REQUIRED fcl)
+  set(LIBFCL_INCLUDE_DIRS ${LIBFCL_PC_INCLUDE_DIRS})
+  # find *absolute* paths to LIBFCL_LIBRARIES
+  set(LIBFCL_LIBRARIES)
+  foreach(_lib ${LIBFCL_PC_LIBRARIES})
+    find_library(_lib_${_lib} ${_lib} HINTS ${LIBFCL_PC_LIBRARY_DIRS})
+    list(APPEND LIBFCL_LIBRARIES ${_lib_${_lib}})
+  endforeach()
+endif()
+
 find_package(octomap REQUIRED)
 find_package(urdfdom REQUIRED)
 find_package(urdfdom_headers REQUIRED)
@@ -160,7 +174,7 @@ catkin_package(
   DEPENDS
     Boost
     EIGEN3
-    ${FCL_LIBRARIES}
+    ${LIBFCL_LIBRARIES}
     OCTOMAP
     urdfdom
     urdfdom_headers
@@ -172,7 +186,7 @@ include_directories(SYSTEM ${catkin_INCLUDE_DIRS}
                            ${EIGEN3_INCLUDE_DIRS}
                            ${urdfdom_INCLUDE_DIRS}
                            ${urdfdom_headers_INCLUDE_DIRS}
-                           ${FCL_INCLUDE_DIRS}
+                           ${LIBFCL_INCLUDE_DIRS}
                            ${BULLET_INCLUDE_DIRS}
                            ${OCTOMAP_INCLUDE_DIRS}
                     )

@@ -39,14 +39,14 @@
 #include <moveit/collision_detection/collision_detector_allocator.h>
 #include <moveit/collision_distance_field/collision_env_hybrid.h>
 
-#ifdef ROS_BUILD_SHARED_LIBS // ros is being built around shared libraries
-  #ifdef moveit_collision_distance_field_EXPORTS // we are building a shared lib/dll
-    #define MOVEIT_COLLISION_DISTANCE_FIELD_DECL ROS_HELPER_EXPORT
-  #else // we are using shared lib/dll
-    #define MOVEIT_COLLISION_DISTANCE_FIELD_DECL ROS_HELPER_IMPORT
-  #endif
-#else // ros is being built around static libraries
-  #define MOVEIT_COLLISION_DISTANCE_FIELD_DECL
+#ifdef ROS_BUILD_SHARED_LIBS                    // ros is being built around shared libraries
+#ifdef moveit_collision_distance_field_EXPORTS  // we are building a shared lib/dll
+#define MOVEIT_COLLISION_DISTANCE_FIELD_DECL ROS_HELPER_EXPORT
+#else  // we are using shared lib/dll
+#define MOVEIT_COLLISION_DISTANCE_FIELD_DECL ROS_HELPER_IMPORT
+#endif
+#else  // ros is being built around static libraries
+#define MOVEIT_COLLISION_DISTANCE_FIELD_DECL
 #endif
 
 namespace collision_detection

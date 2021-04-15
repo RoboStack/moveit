@@ -15,13 +15,6 @@ jobs:
       if: runner.os == 'Linux' || runner.os == 'macOS'
       shell: bash -l -eo pipefail {0}
       run: |
-        # if [[ `uname -s` == "Linux" ]]; then
-        #   CDT="-cos6-x86_64"
-        #   micromamba install -y mesa-libgl-devel$CDT mesa-dri-drivers$CDT \
-        #                         libselinux$CDT libxdamage$CDT libxxf86vm$CDT \
-        #                         libxext$CDT libxfixes$CDT -c conda-forge
-        # fi
-
         export CTEST_OUTPUT_ON_FAILURE=1
         cd moveit_core
         ls -al
@@ -30,23 +23,11 @@ jobs:
       uses: mamba-org/provision-with-micromamba@main
       with:
         environment-file: .github/ci_env.yml
-    # - name: Install System Dependencies
-    #   if: runner.os == 'Linux'
-    #   run: |
-    #     sudo apt-get install libglew-dev mesa-utils xvfb libgl1-mesa-glx libgl1-mesa-dev libglu1-mesa libglu1-mesa-dev \
-    #                          libselinux1 libxdamage1 libxfixes3 libxxf86vm1
 
     - name: Build Moveit Core on Unix
       if: runner.os == 'Linux' || runner.os == 'macOS'
       shell: bash -l -eo pipefail {0}
       run: |
-        # if [[ `uname -s` == "Linux" ]]; then
-        #   CDT="-cos6-x86_64"
-        #   micromamba install -y mesa-libgl-devel$CDT mesa-dri-drivers$CDT \
-        #                         libselinux$CDT libxdamage$CDT libxxf86vm$CDT \
-        #                         libxext$CDT libxfixes$CDT -c conda-forge
-        # fi
-
         export CTEST_OUTPUT_ON_FAILURE=1
         cd moveit_core
 
@@ -62,14 +43,14 @@ jobs:
         ninja
         ninja run_tests
 
-    - name: Build RViz on Windows
+    - name: Build Moveit Core on Windows
       if: runner.os == 'Windows'
       shell: powershell
       run: |
         micromamba shell hook -s cmd.exe -p C:\Users\runneradmin\micromamba
         Get-Content -Path C:\Users\runneradmin\micromamba\condabin\mamba_hook.bat
 
-    - name: Build RViz on Windows
+    - name: Build Moveit Core on Windows
       if: runner.os == 'Windows'
       shell: cmd
       run: |
