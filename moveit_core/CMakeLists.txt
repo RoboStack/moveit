@@ -42,7 +42,7 @@ else()
   message(STATUS "Version of Bullet too old or not available: disabling Bullet collision detection plugin. Try using Ubuntu 18.04 or later.")
 endif()
 
-find_package(fcl)
+find_package(fcl QUIET)
 if (fcl_FOUND)
   set(LIBFCL_LIBRARIES ${FCL_LIBRARIES})
   set(LIBFCL_INCLUDE_DIRS ${FCL_INCLUDE_DIRS})
