@@ -24,6 +24,7 @@
   <depend>boost</depend>
   <depend>eigen</depend>
   <depend>bullet</depend>
+  <depend condition="$ROS_DISTRO == noetic">python3</depend>
   <depend>eigen_stl_containers</depend>
   <depend condition="$ROS_DISTRO != noetic">libfcl-dev</depend>
   <depend condition="$ROS_DISTRO == noetic">fcl</depend>

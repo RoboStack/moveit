@@ -174,7 +174,7 @@ catkin_package(
   DEPENDS
     Boost
     EIGEN3
-    ${LIBFCL_LIBRARIES}
+    LIBFCL
     OCTOMAP
     urdfdom
     urdfdom_headers
