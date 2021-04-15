@@ -85,6 +85,7 @@ COMPONENTS
   visualization_msgs
   xmlrpcpp
   pybind11_catkin
+  pluginlib
 )
 
 catkin_python_setup()
