@@ -1,6 +1,12 @@
 name: Build Moveit Core on all platforms
 
-on: push
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - master
+      - "[kmn]*-devel"
 
 jobs:
   run_moveit_core_compilation:
