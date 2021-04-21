@@ -46,8 +46,12 @@
 
 namespace collision_detection
 {
-const std::string CollisionDetectorAllocatorFCL::NAME("FCL");
+namespace
+{
+static const std::string NAME = "FCL";
 constexpr char LOGNAME[] = "collision_detection.fcl";
+
+}  // namespace
 
 CollisionEnvFCL::CollisionEnvFCL(const moveit::core::RobotModelConstPtr& model, double padding, double scale)
   : CollisionEnv(model, padding, scale)
@@ -432,4 +436,9 @@ void CollisionEnvFCL::updatedPaddingOrScaling(const std::vector<std::string>& li
   }
 }
 
-}  // end of namespace collision_detection
+const std::string& CollisionDetectorAllocatorFCL::getName() const
+{
+  return NAME;
+}
+
+}  // namespace collision_detection

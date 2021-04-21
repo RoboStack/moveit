@@ -39,16 +39,6 @@
 #include <moveit/collision_detection/collision_detector_allocator.h>
 #include <moveit/collision_detection/allvalid/collision_env_allvalid.h>
 
-#ifdef ROS_BUILD_SHARED_LIBS               // ros is being built around shared libraries
-#ifdef moveit_collision_detection_EXPORTS  // we are building a shared lib/dll
-#define MOVEIT_COLLISION_DETECTION_DECL ROS_HELPER_EXPORT
-#else  // we are using shared lib/dll
-#define MOVEIT_COLLISION_DETECTION_DECL ROS_HELPER_IMPORT
-#endif
-#else  // ros is being built around static libraries
-#define MOVEIT_COLLISION_DETECTION_DECL
-#endif
-
 namespace collision_detection
 {
 /** \brief An allocator for AllValid collision detectors */
@@ -56,6 +46,6 @@ class CollisionDetectorAllocatorAllValid
   : public CollisionDetectorAllocatorTemplate<CollisionEnvAllValid, CollisionDetectorAllocatorAllValid>
 {
 public:
-  MOVEIT_COLLISION_DETECTION_DECL static const std::string NAME;  // defined in collision_env_allvalid.cpp
+  const std::string& getName() const override;
 };
 }  // namespace collision_detection
