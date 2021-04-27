@@ -24,6 +24,7 @@
   <depend>boost</depend>
   <depend>eigen</depend>
   <depend>bullet</depend>
+  <depend condition="$ROS_DISTRO == noetic">python3</depend>
   <depend>eigen_stl_containers</depend>
   <depend condition="$ROS_DISTRO != noetic">libfcl-dev</depend>
   <depend condition="$ROS_DISTRO == noetic">fcl</depend>
@@ -51,6 +52,7 @@
   <depend>trajectory_msgs</depend>
   <depend>visualization_msgs</depend>
   <depend>xmlrpcpp</depend>
+  <depend>pluginlib</depend>
 
   <test_depend>moveit_resources_panda_moveit_config</test_depend>
   <test_depend>moveit_resources_pr2_description</test_depend>
