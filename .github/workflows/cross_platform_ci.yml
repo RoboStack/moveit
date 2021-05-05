@@ -29,7 +29,7 @@ jobs:
       run: |
         micromamba shell hook -s cmd.exe -p C:\Users\runneradmin\micromamba
         Get-Content -Path C:\Users\runneradmin\micromamba\condabin\mamba_hook.bat
-        
+
         echo "Remove unnecessary / colliding things from PATH"
         set "PATH=%PATH:C:\ProgramData\Chocolatey\bin;=%"
         set "PATH=%PATH:C:\Program Files (x86)\sbt\bin;=%"
