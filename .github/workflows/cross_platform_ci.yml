@@ -52,6 +52,8 @@ jobs:
       shell: bash -l -eo pipefail {0}
       run: |
         micromamba activate test
+        rosdep init
+        rosdep update
         rosdep install --from-paths moveit_core --ignore-src -r -y
 
     - name: Set up Moveit Core Dependencies on Windows
@@ -61,6 +63,8 @@ jobs:
         echo "Activate environment, and use rosdep to install dependencies"
         call C:\Users\runneradmin\micromamba\condabin\micromamba.bat activate test
         SET "PYTHONPATH=%CONDA_PREFIX%\Library\lib\site-packages"
+        rosdep init
+        rosdep update
         rosdep install --from-paths moveit_core --ignore-src -r -y
 
     - name: Build Moveit Core on Unix
