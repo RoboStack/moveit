@@ -50,8 +50,9 @@ jobs:
       if: runner.os == 'Linux' || runner.os == 'macOS'
       shell: bash -l -eo pipefail {0}
       run: |
+        MICROMAMBA_PATH=$(dirname $(which micromamba))
         micromamba activate test
-        export PATH=$(dirname $(which micromamba)):$PATH
+        export PATH=$MICROMAMBA_PATH:$PATH
         rosdep init
         rosdep update
         rosdep install --from-paths moveit_core --ignore-src -r -y
