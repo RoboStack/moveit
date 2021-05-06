@@ -52,7 +52,7 @@ jobs:
       run: |
         MICROMAMBA_PATH=$(dirname $(which micromamba))
         micromamba activate test
-        export PATH=$MICROMAMBA_PATH:$PATH
+        export PATH=$HOME/micromamba-bin:$PATH
         rosdep init
         rosdep update
         rosdep install --from-paths moveit_core --ignore-src -r -y
