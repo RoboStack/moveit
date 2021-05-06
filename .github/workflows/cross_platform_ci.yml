@@ -51,7 +51,7 @@ jobs:
       shell: bash -l -eo pipefail {0}
       run: |
         micromamba activate test
-        export PATH=$MAMBA_EXE:$PATH
+        export PATH=dirname $(which mamba):$PATH
         rosdep init
         rosdep update
         rosdep install --from-paths moveit_core --ignore-src -r -y
