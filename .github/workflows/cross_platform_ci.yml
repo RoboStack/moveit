@@ -51,7 +51,7 @@ jobs:
       shell: bash -l -eo pipefail {0}
       run: |
         micromamba activate test
-        export PATH=dirname $(which mamba):$PATH
+        export PATH=$(dirname $(which micromamba)):$PATH
         rosdep init
         rosdep update
         rosdep install --from-paths moveit_core --ignore-src -r -y
@@ -63,6 +63,7 @@ jobs:
         echo "Activate environment, and use rosdep to install dependencies"
         call C:\Users\runneradmin\micromamba\condabin\micromamba.bat activate test
         SET "PYTHONPATH=%CONDA_PREFIX%\Library\lib\site-packages"
+        micromamba list --help
         rosdep init
         rosdep update
         rosdep install --from-paths moveit_core --ignore-src -r -y
