@@ -12,3 +12,6 @@ dependencies:
   - ros-distro-mutex 0.1 noetic
   - ros-noetic-catkin
   - ros-noetic-ros-environment
+  - pip
+  - pip:
+      - https://github.com/robostack/rosdep@master

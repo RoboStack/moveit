@@ -22,6 +22,7 @@ jobs:
       uses: mamba-org/provision-with-micromamba@main
       with:
         environment-file: .github/ci_cross_platform_env.yml
+        micromamba-version: latest
 
     - name: Setup Mamba on Windows
       if: runner.os == 'Windows'
