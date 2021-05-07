@@ -52,7 +52,7 @@ jobs:
       shell: bash -l -eo pipefail {0}
       run: |
         micromamba activate test
-        pip install https://github.com/robostack/rosdep@master
+        pip install git+https://github.com/robostack/rosdep@master
         export PATH=$HOME/micromamba-bin:$PATH
         rosdep init
         rosdep update
@@ -65,7 +65,7 @@ jobs:
         echo "Activate environment, and use rosdep to install dependencies"
         call C:\Users\runneradmin\micromamba\condabin\micromamba.bat activate test
         SET "PYTHONPATH=%CONDA_PREFIX%\Library\lib\site-packages"
-        pip install https://github.com/robostack/rosdep@master
+        pip install git+https://github.com/robostack/rosdep@master
         rosdep init
         rosdep update
         rosdep install --from-paths moveit_core --ignore-src -r -y
