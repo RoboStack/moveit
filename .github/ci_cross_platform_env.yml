@@ -15,4 +15,4 @@ dependencies:
   - ros-noetic-catkin
   - ros-noetic-ros-environment
   - pip:
-      - https://github.com/robostack/rosdep@master
+      - https://github.com/robostack/rosdep@add_robostack
