@@ -15,6 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
+
     steps:
     - uses: actions/checkout@v2
 
@@ -24,46 +25,12 @@ jobs:
         environment-file: .github/ci_cross_platform_env.yml
         micromamba-version: latest
 
-    - name: Setup Mamba on Windows
-      if: runner.os == 'Windows'
-      shell: powershell
-      run: |
-        micromamba shell hook -s cmd.exe -p C:\Users\runneradmin\micromamba
-        Get-Content -Path C:\Users\runneradmin\micromamba\condabin\mamba_hook.bat
-
-        echo "Remove unnecessary / colliding things from PATH"
-        set "PATH=%PATH:C:\ProgramData\Chocolatey\bin;=%"
-        set "PATH=%PATH:C:\Program Files (x86)\sbt\bin;=%"
-        set "PATH=%PATH:C:\Rust\.cargo\bin;=%"
-        set "PATH=%PATH:C:\Program Files\Git\usr\bin;=%"
-        set "PATH=%PATH:C:\Program Files\Git\cmd;=%"
-        set "PATH=%PATH:C:\Program Files\Git\mingw64\bin;=%"
-        set "PATH=%PATH:C:\Program Files (x86)\Subversion\bin;=%"
-        set "PATH=%PATH:C:\Program Files\CMake\bin;=%"
-        set "PATH=%PATH:C:\Program Files\OpenSSL\bin;=%"
-        set "PATH=%PATH:C:\Strawberry\c\bin;=%"
-        set "PATH=%PATH:C:\Strawberry\perl\bin;=%"
-        set "PATH=%PATH:C:\Strawberry\perl\site\bin;=%"
-        set "PATH=%PATH:c:\tools\php;=%"
-        set "PATH=%PATH:ostedtoolcache=%"
-
     - name: Set up Moveit Core Dependencies on Unix
       if: runner.os == 'Linux' || runner.os == 'macOS'
       shell: bash -l -eo pipefail {0}
       run: |
         micromamba activate test
         export PATH=$HOME/micromamba-bin:$PATH
-        rosdep init
-        rosdep update
-        rosdep install --from-paths moveit_core --ignore-src -r -y
-
-    - name: Set up Moveit Core Dependencies on Windows
-      if: runner.os == 'Windows'
-      shell: cmd
-      run: |
-        echo "Activate environment, and use rosdep to install dependencies"
-        call C:\Users\runneradmin\micromamba\condabin\micromamba.bat activate test
-        SET "PYTHONPATH=%CONDA_PREFIX%\Library\lib\site-packages"
         rosdep init
         rosdep update
         rosdep install --from-paths moveit_core --ignore-src -r -y
@@ -87,12 +54,42 @@ jobs:
         ninja
         ninja run_tests
 
+    - name: Setup Mamba on Windows
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |
+        echo "Remove unnecessary / colliding things from PATH"
+        set "PATH=%PATH:C:\ProgramData\Chocolatey\bin;=%"
+        set "PATH=%PATH:C:\Program Files (x86)\sbt\bin;=%"
+        set "PATH=%PATH:C:\Rust\.cargo\bin;=%"
+        set "PATH=%PATH:C:\Program Files\Git\usr\bin;=%"
+        set "PATH=%PATH:C:\Program Files\Git\cmd;=%"
+        set "PATH=%PATH:C:\Program Files\Git\mingw64\bin;=%"
+        set "PATH=%PATH:C:\Program Files (x86)\Subversion\bin;=%"
+        set "PATH=%PATH:C:\Program Files\CMake\bin;=%"
+        set "PATH=%PATH:C:\Program Files\OpenSSL\bin;=%"
+        set "PATH=%PATH:C:\Strawberry\c\bin;=%"
+        set "PATH=%PATH:C:\Strawberry\perl\bin;=%"
+        set "PATH=%PATH:C:\Strawberry\perl\site\bin;=%"
+        set "PATH=%PATH:c:\tools\php;=%"
+        set "PATH=%PATH:ostedtoolcache=%"
+
+    - name: Set up Moveit Core Dependencies on Windows
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |
+        echo "Activate environment, and use rosdep to install dependencies"
+        call C:\Users\runneradmin\micromamba\condabin\micromamba.bat activate test
+
+        rosdep init
+        rosdep update
+        rosdep install --from-paths moveit_core --ignore-src -r -y
+
     - name: Build Moveit Core on Windows
       if: runner.os == 'Windows'
       shell: cmd
       run: |
         call C:\Users\runneradmin\micromamba\condabin\micromamba.bat activate test
-        SET "PYTHONPATH=%CONDA_PREFIX%\Library\lib\site-packages"
 
         cd moveit_core
         mkdir build
