@@ -54,10 +54,22 @@ jobs:
         ninja
         ninja run_tests
 
-    - name: Setup Mamba on Windows
+    - name: Set up Moveit Core Dependencies on Windows
       if: runner.os == 'Windows'
       shell: cmd
       run: |
+        echo "Activate environment, and use rosdep to install dependencies"
+        call C:\Users\runneradmin\micromamba\condabin\micromamba.bat activate test
+
+        rosdep init
+        rosdep update
+        rosdep install --from-paths moveit_core --ignore-src -r -y
+
+    - name: Build Moveit Core on Windows
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |
+
         echo "Remove unnecessary / colliding things from PATH"
         set "PATH=%PATH:C:\ProgramData\Chocolatey\bin;=%"
         set "PATH=%PATH:C:\Program Files (x86)\sbt\bin;=%"
@@ -74,22 +86,11 @@ jobs:
         set "PATH=%PATH:c:\tools\php;=%"
         set "PATH=%PATH:ostedtoolcache=%"
 
-    - name: Set up Moveit Core Dependencies on Windows
-      if: runner.os == 'Windows'
-      shell: cmd
-      run: |
-        echo "Activate environment, and use rosdep to install dependencies"
         call C:\Users\runneradmin\micromamba\condabin\micromamba.bat activate test
 
-        rosdep init
-        rosdep update
-        rosdep install --from-paths moveit_core --ignore-src -r -y
+        echo "%PATH%"
 
-    - name: Build Moveit Core on Windows
-      if: runner.os == 'Windows'
-      shell: cmd
-      run: |
-        call C:\Users\runneradmin\micromamba\condabin\micromamba.bat activate test
+        python -c "import sys; print(sys.version)"
 
         cd moveit_core
         mkdir build
