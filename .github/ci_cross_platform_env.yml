@@ -8,8 +8,7 @@ dependencies:
   - cmake
   - catkin_pkg
   - pkg-config
-  - rospkg
-  - pyyaml
+  - rosdep
   - rosdistro
   - ros-distro-mutex 0.1 noetic
   - ros-noetic-catkin
