@@ -11,6 +11,7 @@ endif()
 
 include(GenerateExportHeader)
 generate_export_header(${MOVEIT_LIB_NAME})
+target_include_directories(${MOVEIT_LIB_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>)
 
 # This line is needed to ensure that messages are done being built before this is built
 add_dependencies(${MOVEIT_LIB_NAME} ${catkin_EXPORTED_TARGETS})
@@ -23,4 +24,4 @@ install(TARGETS ${MOVEIT_LIB_NAME}
         RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION})
 
 install(DIRECTORY include/ DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION})
-install(FILES ${PROJECT_BINARY_DIR}/${MOVEIT_LIB_NAME}_export.h DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION}/moveit/kinematics_base/)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${MOVEIT_LIB_NAME}_export.h DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION}/moveit/kinematics_base/)

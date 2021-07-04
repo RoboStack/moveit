@@ -5,6 +5,7 @@ set_target_properties(${MOVEIT_LIB_NAME} PROPERTIES VERSION "${${PROJECT_NAME}_V
 
 include(GenerateExportHeader)
 generate_export_header(${MOVEIT_LIB_NAME})
+target_include_directories(${MOVEIT_LIB_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>)
 
 target_link_libraries(${MOVEIT_LIB_NAME}
   moveit_robot_model
@@ -24,7 +25,7 @@ install(TARGETS ${MOVEIT_LIB_NAME}
         ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
         RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION})
 install(DIRECTORY include/ DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION})
-install(FILES ${PROJECT_BINARY_DIR}/${MOVEIT_LIB_NAME}_export.h DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION}/moveit/planning_scene/)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${MOVEIT_LIB_NAME}_export.h DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION}/moveit/planning_scene/)
 
 if(CATKIN_ENABLE_TESTING)
   catkin_add_gtest(test_planning_scene test/test_planning_scene.cpp)
