@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - master
+      - faster_cross_platform_ci
       - "[kmn]*-devel"
 
 jobs:
