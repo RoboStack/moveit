@@ -16,3 +16,5 @@ dependencies:
   - orocos-kdl 1.5.0
   - python-orocos-kdl 1.5.0
   - openssl 1.1.1*
+  - sel(unix): ccache
+  - sel(win): clcache
