@@ -53,6 +53,7 @@ jobs:
       run: |
         mkdir -p ~/ws/src
         mv moveit_core ~/ws/src
+        mv moveit_ros ~/ws/src
         # mv moveit_ros ~/ws/src
 
     - name: Build MoveIt Core on Unix
@@ -72,21 +73,11 @@ jobs:
                        -DCATKIN_SKIP_TESTING=OFF \
           --cmake-target tests
 
-        # cd moveit_core
-
-        # mkdir build
-        # cd build
-
-        # cmake .. -DCMAKE_PREFIX_PATH=$CONDA_PREFIX \
-        #          -DCMAKE_INSTALL_PREFIX=$CONDA_PREFIX \
-        #          -DCMAKE_BUILD_TYPE=Release \
-        #          -DCATKIN_SKIP_TESTING=OFF \
-        #          -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
-        #          -DCMAKE_C_COMPILER_LAUNCHER=ccache \
-        #          -G "Ninja"
-
-        # ninja
-        # ninja run_tests
+        colcon build \
+          --cmake-args -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
+                       -DCMAKE_C_COMPILER_LAUNCHER=ccache \
+                       -DCATKIN_SKIP_TESTING=OFF \
+          --cmake-target run_tests
 
     # - name: Set up MoveIt Core Dependencies on Unix
     #   if: runner.os == 'Linux' || runner.os == 'macOS'
