@@ -51,7 +51,7 @@ jobs:
       if: runner.os == 'Linux' || runner.os == 'macOS'
       shell: bash -l -eo pipefail {0}
       run: |
-        mkdir ~/ws/src
+        mkdir -p ~/ws/src
         mv moveit_core ~/ws/src
         # mv moveit_ros ~/ws/src
 
