@@ -39,15 +39,6 @@ jobs:
           ~/ccache
         key: ${{ runner.os }}-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
 
-    - name: Set up MoveIt Core Dependencies on Unix
-      if: runner.os == 'Linux' || runner.os == 'macOS'
-      shell: bash -l -eo pipefail {0}
-      run: |
-        rosdep init
-        rosdep update
-        rosdep install --from-paths moveit_core --ignore-src -r -y
-        rosdep install --from-paths moveit_ros --ignore-src -r -y
-
     - name: Create colcon workspace
       if: runner.os == 'Linux' || runner.os == 'macOS'
       shell: bash -l -eo pipefail {0}
@@ -55,7 +46,15 @@ jobs:
         mkdir -p ~/ws/src
         mv moveit_core ~/ws/src
         mv moveit_ros ~/ws/src
-        # mv moveit_ros ~/ws/src
+
+    - name: Set up MoveIt Core Dependencies on Unix
+      if: runner.os == 'Linux' || runner.os == 'macOS'
+      shell: bash -l -eo pipefail {0}
+      run: |
+        cd ~/ws
+        rosdep init
+        rosdep update
+        rosdep install --from-paths src --ignore-src -r -y
 
     - name: Build MoveIt Core on Unix
       if: runner.os == 'Linux' || runner.os == 'macOS'
