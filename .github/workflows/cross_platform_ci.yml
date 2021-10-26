@@ -46,6 +46,7 @@ jobs:
         rosdep init
         rosdep update
         rosdep install --from-paths moveit_core --ignore-src -r -y
+        rosdep install --from-paths moveit_ros --ignore-src -r -y
 
     - name: Create colcon workspace
       if: runner.os == 'Linux' || runner.os == 'macOS'
